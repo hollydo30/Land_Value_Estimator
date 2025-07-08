@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Commercial Land Value Estimator</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 600px; margin: auto;  }
+    input, button { width: 100%; padding: 10px; margin: 10px 0; }
+    button { background: #007BFF; color: white; border: none; cursor: pointer; }
+    #output { margin-top: 20px; font-size: 20px; background: #f2f2f2; padding: 10px; border-radius: 6px; white-space: pre-wrap;}
+  </style>
+</head>
+<body>
+  <h2>Commercial Land Value Estimator</h2>
+
+  <label>Land Area (sqm):</label>
+  <input type="number" id="land_area" required>
+
+  <label>FSA (sqm):</label>
+  <input type="number" id="fsa" required>
+
+  <label>Latitude:</label>
+  <input type="number" id="latitude" step="0.0001" required>
+
+  <label>Longitude:</label>
+  <input type="number" id="longitude" step="0.0001" required>
+
+  <button onclick="predict()">Predict with Explanation</button>
+
+  <div id="output"></div>
+
+  <script>
+    async function predict() {
+      const data = {
+        Land_Area: parseFloat(document.getElementById("land_area").value),
+        FSA: parseFloat(document.getElementById("fsa").value),
+        Latitude: parseFloat(document.getElementById("latitude").value),
+        Longitude: parseFloat(document.getElementById("longitude").value)
+      };
+
+      const res = await fetch('/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      document.getElementById("output").innerText = result.generated_text;
+    }
+  </script>
+</body>
+</html>
+
