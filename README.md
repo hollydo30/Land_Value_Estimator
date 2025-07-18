@@ -1,0 +1,1 @@
+Built a machine learning model in Python to predict land prices with high accuracy (R² > 0.8) using real estate features. Applied regression algorithms, feature engineering, and data cleaning techniques.
